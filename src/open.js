@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process';
 import path from 'node:path';
 
 export function openInBrowser(target, options = {}) {
-  const { browser, quiet } = options;
+  const { browser } = options;
   const platform = process.platform;
 
   return new Promise((resolve, reject) => {

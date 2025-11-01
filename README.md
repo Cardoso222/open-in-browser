@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/open-in-browser-cli.svg)](https://www.npmjs.com/package/open-in-browser-cli)
 
-[![build](https://github.com/your-username/open-in-browser-cli/workflows/CI/badge.svg)](https://github.com/your-username/open-in-browser-cli/actions)
+[![build](https://github.com/cardoso222/open-in-browser-cli/workflows/CI/badge.svg)](https://github.com/cardoso222/open-in-browser-cli/actions)
 
 ## Install
 
@@ -64,5 +64,5 @@ open-in-browser https://github.com https://npmjs.com
 
 ## License
 
-MIT
+MIT © Paulo Cardoso
 
