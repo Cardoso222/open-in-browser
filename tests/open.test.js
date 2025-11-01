@@ -7,14 +7,11 @@ test('openInBrowser is a function', () => {
 });
 
 test('openInBrowser accepts URL string', async () => {
-  // This test verifies the function can be called with a URL
-  // Note: We don't actually open a browser in tests to avoid side effects
   const url = 'https://example.com';
   assert.strictEqual(typeof url, 'string');
 });
 
 test('openInBrowser accepts options object', async () => {
-  // Verify options parameter structure
   const options = { browser: 'chrome', quiet: true };
   assert.strictEqual(typeof options, 'object');
   assert.strictEqual(typeof options.browser, 'string');

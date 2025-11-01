@@ -1,14 +1,6 @@
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 
-/**
- * Opens a URL or file path in the specified browser
- * @param {string} target - URL or file path to open
- * @param {Object} options - Options object
- * @param {string} [options.browser] - Browser to use ('chrome', 'firefox', 'edge', or undefined for default)
- * @param {boolean} [options.quiet] - Suppress output
- * @returns {Promise<void>}
- */
 export function openInBrowser(target, options = {}) {
   const { browser, quiet } = options;
   const platform = process.platform;
@@ -17,17 +9,14 @@ export function openInBrowser(target, options = {}) {
     let command;
     let args = [];
 
-    // Normalize target - convert relative paths to absolute
     let targetPath = target;
     if (target.startsWith('./') || (!target.startsWith('http://') && !target.startsWith('https://') && !target.startsWith('file://'))) {
-      // Check if it's a local file path
       if (!path.isAbsolute(target)) {
         targetPath = path.resolve(process.cwd(), target);
       }
     }
 
     if (platform === 'darwin') {
-      // macOS
       if (browser === 'chrome') {
         command = 'open';
         args = ['-a', 'Google Chrome', targetPath];
@@ -38,33 +27,25 @@ export function openInBrowser(target, options = {}) {
         command = 'open';
         args = ['-a', 'Microsoft Edge', targetPath];
       } else {
-        // Default browser
         command = 'open';
         args = [targetPath];
       }
     } else if (platform === 'win32') {
-      // Windows
       if (browser === 'chrome') {
-        // Try chrome.exe directly (usually in PATH)
         command = 'chrome.exe';
         args = [targetPath];
       } else if (browser === 'firefox') {
-        // Try firefox.exe directly (usually in PATH)
         command = 'firefox.exe';
         args = [targetPath];
       } else if (browser === 'edge') {
-        // Try msedge.exe directly (usually in PATH)
         command = 'msedge.exe';
         args = [targetPath];
       } else {
-        // Default browser using start command
         command = 'cmd';
         args = ['/c', 'start', '', targetPath];
       }
     } else {
-      // Linux and other Unix-like systems
       if (browser === 'chrome') {
-        // Try google-chrome first, then chromium-browser
         command = 'google-chrome';
         args = [targetPath];
       } else if (browser === 'firefox') {
@@ -74,7 +55,6 @@ export function openInBrowser(target, options = {}) {
         command = 'microsoft-edge';
         args = [targetPath];
       } else {
-        // Default browser using xdg-open
         command = 'xdg-open';
         args = [targetPath];
       }
@@ -94,9 +74,7 @@ export function openInBrowser(target, options = {}) {
     const handleError = (error) => {
       if (resolved || rejected) return;
       
-      // Try fallback options
       if (platform === 'win32' && browser) {
-        // On Windows, if direct executable fails, try common installation paths
         const fallbackPaths = [];
         
         if (browser === 'chrome') {
@@ -129,21 +107,16 @@ export function openInBrowser(target, options = {}) {
             }
             
             fallbackChild.on('error', () => {
-              // Continue to next fallback path
             });
           } catch (fallbackError) {
-            // Continue to next fallback path
           }
         }
         
-        // If all fallback paths fail, reject with error
         rejected = true;
         reject(new Error(`Failed to open ${targetPath}. ${browser} not found.`));
         return;
       } else if (platform !== 'win32' && platform !== 'darwin') {
-        // Linux fallbacks
         if (browser === 'chrome' && command === 'google-chrome') {
-          // Try chromium-browser as fallback
           try {
             const fallbackChild = spawn('chromium-browser', [targetPath], {
               detached: true,
@@ -164,10 +137,8 @@ export function openInBrowser(target, options = {}) {
             
             return;
           } catch (fallbackError) {
-            // Fall through to reject
           }
         } else if (browser === 'edge' && command === 'microsoft-edge') {
-          // Try microsoft-edge-stable as fallback
           try {
             const fallbackChild = spawn('microsoft-edge-stable', [targetPath], {
               detached: true,
@@ -188,7 +159,6 @@ export function openInBrowser(target, options = {}) {
             
             return;
           } catch (fallbackError) {
-            // Fall through to reject
           }
         }
       }
@@ -203,11 +173,9 @@ export function openInBrowser(target, options = {}) {
         stdio: 'ignore'
       });
 
-      // If spawn was successful, resolve immediately
       if (child.pid) {
         handleSpawn(child);
       } else {
-        // Wait for error event if spawn failed
         child.on('error', handleError);
       }
     } catch (error) {

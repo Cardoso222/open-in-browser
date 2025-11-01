@@ -43,7 +43,6 @@ const cli = meow(`
 async function main() {
   const { input, flags } = cli;
 
-  // Explicitly handle --help/-h to ensure exit code 0 across shells
   if (flags.help || process.argv.includes('--help') || process.argv.includes('-h')) {
     console.log(cli.help);
     process.exit(0);
