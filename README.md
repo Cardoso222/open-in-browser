@@ -4,8 +4,6 @@
 
 [![npm version](https://img.shields.io/npm/v/open-in-browser-cli.svg)](https://www.npmjs.com/package/open-in-browser-cli)
 
-[![build](https://github.com/cardoso222/open-in-browser-cli/workflows/CI/badge.svg)](https://github.com/cardoso222/open-in-browser-cli/actions)
-
 ## Install
 
 ```sh
