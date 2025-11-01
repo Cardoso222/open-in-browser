@@ -1,0 +1,32 @@
+{
+  "name": "open-in-browser-cli",
+  "version": "1.0.0",
+  "description": "Open URLs or local files in your default browser — cross-platform",
+  "type": "module",
+  "main": "src/cli.js",
+  "bin": {
+    "open-in-browser": "./src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test tests/cli.test.js tests/open.test.js"
+  },
+  "keywords": [
+    "cli",
+    "browser",
+    "open",
+    "url",
+    "cross-platform"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "meow": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
