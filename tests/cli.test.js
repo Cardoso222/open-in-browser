@@ -43,6 +43,10 @@ test('CLI validates input requirement', async () => {
     });
 
     let output = '';
+    child.stdout.on('data', (data) => {
+      output += data.toString();
+    });
+
     child.stderr.on('data', (data) => {
       output += data.toString();
     });
@@ -67,6 +71,10 @@ test('CLI validates browser flags', async () => {
     });
 
     let output = '';
+    child.stdout.on('data', (data) => {
+      output += data.toString();
+    });
+
     child.stderr.on('data', (data) => {
       output += data.toString();
     });
